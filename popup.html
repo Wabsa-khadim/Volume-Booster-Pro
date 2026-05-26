@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Volume Booster Pro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="app-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M11 5L6 9H2v6h4l5 4V5z" fill="url(#speakerGrad)"/>
+            <path d="M15.54 8.46a5 5 0 0 1 0 7.07" stroke="url(#waveGrad1)" stroke-width="2" stroke-linecap="round"/>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14" stroke="url(#waveGrad2)" stroke-width="2" stroke-linecap="round"/>
+            <defs>
+              <linearGradient id="speakerGrad" x1="2" y1="5" x2="11" y2="19" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#A855F7"/>
+                <stop offset="1" stop-color="#EC4899"/>
+              </linearGradient>
+              <linearGradient id="waveGrad1" x1="15" y1="8" x2="23" y2="16" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#A855F7"/>
+                <stop offset="1" stop-color="#EC4899"/>
+              </linearGradient>
+              <linearGradient id="waveGrad2" x1="18" y1="4" x2="24" y2="20" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#818CF8"/>
+                <stop offset="1" stop-color="#A855F7"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div class="header-text">
+          <span class="app-name">Volume Booster</span>
+          <span class="app-sub">Pro</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <!-- Power Toggle -->
+        <label class="power-toggle" id="powerToggleLabel" title="Enable/Disable Boost">
+          <input type="checkbox" id="powerToggle" checked />
+          <span class="power-track">
+            <span class="power-thumb">
+              <svg class="power-icon" width="10" height="10" viewBox="0 0 24 24" fill="none">
+                <path d="M12 2v6M6.34 6.34a8 8 0 1 0 11.32 0" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+            </span>
+          </span>
+        </label>
+      </div>
+    </header>
+
+    <!-- Circular Volume Display -->
+    <div class="dial-section">
+      <div class="dial-wrapper">
+        <svg class="dial-svg" viewBox="0 0 200 200" width="200" height="200">
+          <defs>
+            <linearGradient id="arcGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#A855F7"/>
+              <stop offset="100%" stop-color="#EC4899"/>
+            </linearGradient>
+            <linearGradient id="glowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#A855F7" stop-opacity="0.8"/>
+              <stop offset="100%" stop-color="#EC4899" stop-opacity="0.8"/>
+            </linearGradient>
+            <filter id="dialBlur">
+              <feGaussianBlur stdDeviation="3"/>
+            </filter>
+          </defs>
+          <!-- Track -->
+          <circle class="dial-track" cx="100" cy="100" r="80" />
+          <!-- Glow layer -->
+          <circle class="dial-glow" id="dialGlow" cx="100" cy="100" r="80"
+            stroke="url(#glowGradient)"
+            stroke-dasharray="502.65"
+            stroke-dashoffset="502.65"
+            transform="rotate(-220 100 100)"
+            filter="url(#dialBlur)"
+          />
+          <!-- Fill Arc -->
+          <circle class="dial-fill" id="dialArc" cx="100" cy="100" r="80"
+            stroke="url(#arcGradient)"
+            stroke-dasharray="502.65"
+            stroke-dashoffset="502.65"
+            transform="rotate(-220 100 100)"
+          />
+          <!-- Tick marks -->
+          <g id="tickMarks"></g>
+        </svg>
+
+        <div class="dial-center">
+          <div class="volume-value" id="volumeValue">100</div>
+          <div class="volume-unit">%</div>
+          <div class="volume-label" id="volumeLabel">Normal</div>
+        </div>
+
+        <!-- Knob handle -->
+        <div class="dial-knob" id="dialKnob">
+          <div class="knob-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Boost Level Pills -->
+    <div class="preset-section">
+      <div class="preset-label">Quick Presets</div>
+      <div class="presets">
+        <button class="preset-pill active" data-value="100" id="preset100">1×</button>
+        <button class="preset-pill" data-value="200" id="preset200">2×</button>
+        <button class="preset-pill" data-value="300" id="preset300">3×</button>
+        <button class="preset-pill" data-value="400" id="preset400">4×</button>
+        <button class="preset-pill" data-value="600" id="preset600">6×</button>
+      </div>
+    </div>
+
+    <!-- Slider -->
+    <div class="slider-section">
+      <div class="slider-labels">
+        <span class="slider-label-left">0%</span>
+        <span class="slider-label-right">600%</span>
+      </div>
+      <div class="slider-track-wrapper">
+        <div class="slider-fill" id="sliderFill"></div>
+        <input
+          type="range"
+          id="volumeSlider"
+          min="0"
+          max="600"
+          value="100"
+          step="1"
+          class="volume-slider"
+        />
+      </div>
+    </div>
+
+    <!-- Site Info Bar -->
+    <div class="site-bar" id="siteBar">
+      <div class="site-favicon" id="siteFavicon">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" stroke="#A855F7" stroke-width="2"/>
+          <path d="M12 6v6l4 2" stroke="#A855F7" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <span class="site-name" id="siteName">Loading...</span>
+      <div class="site-status" id="siteStatus">
+        <span class="status-dot active" id="statusDot"></span>
+        <span class="status-text" id="statusText">Active</span>
+      </div>
+    </div>
+
+    <!-- Equalizer Visualizer (decorative) -->
+    <div class="visualizer" id="visualizer">
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+      <div class="vis-bar"></div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <span class="footer-text">Volume Booster Pro • Web Audio API</span>
+    </footer>
+
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
